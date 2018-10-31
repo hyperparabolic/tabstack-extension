@@ -1,4 +1,5 @@
 
+const blacklistedUrls = /^(about:|chrome:|data:|file:|javascript:)/;
 
 export const PUSH_TAB_STARTING = Symbol("PUSH_TAB_STARTING");
 export const PUSH_TAB_COMPLETED = Symbol("PUSH_TAB_COMPLETED");
@@ -7,6 +8,7 @@ export const DELETE_TAB = Symbol("DELETE_TAB");
 
 export const POP_TAB_STARTING = Symbol("POP_TAB_STARTING");
 export const POP_TAB_COMPLETED = Symbol("POP_TAB_COMPLETED");
+
 
 export const pushTab = () => {
     return async (dispatch) => {
@@ -17,7 +19,26 @@ export const pushTab = () => {
             active: true,
         }))[0];
         tab.date = Date.now();
-        browser.tabs.remove(tab.id).then(() => dispatch(pushTabCompleted(tab)));
+
+        // do not push blacklisted tabs
+        if (tab.url.match(blacklistedUrls)) {
+            console.log("skip push, blacklisted tab");
+            return;
+        }
+
+        let tabs = (await browser.tabs.query({
+            currentWindow: true,
+        }));
+
+        let pushPromise = Promise.resolve(true);
+
+        // open newtab if last tab
+        if (tabs.length === 1) {
+            let props = { active: true, index: 0 };
+            pushPromise.then(() => browser.tabs.create(props));
+        }
+        pushPromise.then(() => browser.tabs.remove(tab.id))
+            .then(() => dispatch(pushTabCompleted(tab)));
     };
 };
 
