@@ -8,6 +8,7 @@ module.exports = {
   devtool: "source-map",
   entry: {
     "popup/index": "./popup/index.js",
+    "background/index": "./background/index.js",
   },
 
   module: {

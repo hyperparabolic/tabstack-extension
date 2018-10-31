@@ -5,9 +5,8 @@ export const PUSH_TAB_COMPLETED = Symbol("PUSH_TAB_COMPLETED");
 
 export const DELETE_TAB = Symbol("DELETE_TAB");
 
-export const POP_ID_STARTING = Symbol("POP_ID_STARTING");
-export const POP_ID_COMPLETED = Symbol("POP_ID_COMPLETED");
-
+export const POP_TAB_STARTING = Symbol("POP_TAB_STARTING");
+export const POP_TAB_COMPLETED = Symbol("POP_TAB_COMPLETED");
 
 export const pushTab = () => {
     return async (dispatch) => {
@@ -31,6 +30,39 @@ const pushTabStarting = () => {
 const pushTabCompleted = (tab) => {
     return {
         type: PUSH_TAB_COMPLETED,
+        tab,
+    };
+};
+
+export const popTab = (tab) => {
+    return async (dispatch) => {
+        dispatch(popTabStarting());
+
+        let currentTab = (await browser.tabs.query({
+            currentWindow: true,
+            active: true,
+        }))[0];
+
+        let props = {
+            active: true,
+            // TODO: +1?  have to feel this out
+            index: currentTab.index,
+            url: tab.url,
+        };
+
+        browser.tabs.create(props).then(() => dispatch(popTabCompleted(tab)));
+    };
+};
+
+const popTabStarting = () => {
+    return {
+        type: POP_TAB_STARTING,
+    };
+};
+
+const popTabCompleted = (tab) => {
+    return {
+        type: POP_TAB_COMPLETED,
         tab,
     };
 };

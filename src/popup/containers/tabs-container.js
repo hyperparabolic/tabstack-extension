@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { deleteTab } from "../actions";
+import { deleteTab, popTab } from "../actions";
 // import { reducer } from "../reducers";
 import Tab from "../components/tab";
 import TabsList from "../components/tabs-list";
 
-const TabsContainer = ({ tabs, deleteTab }) => (
+const TabsContainer = ({ tabs, popTab, deleteTab }) => (
     <div>
         <TabsList>
             {
@@ -14,8 +14,8 @@ const TabsContainer = ({ tabs, deleteTab }) => (
                     <Tab
                         key={tab.id}
                         tab={tab}
+                        onPopClicked={() => popTab(tab)}
                         onDeleteClicked={() => deleteTab(tab)} />
-
                 )
             }
         </TabsList>
@@ -29,6 +29,7 @@ TabsContainer.propTypes = {
         url: PropTypes.string.isRequired,
         date: PropTypes.number.isRequired,
     })).isRequired,
+    popTab: PropTypes.func.isRequired,
     deleteTab: PropTypes.func.isRequired,
 };
 
@@ -38,5 +39,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { deleteTab }
+    { popTab, deleteTab }
 )(TabsContainer);

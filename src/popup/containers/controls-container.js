@@ -1,24 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { pushTab } from "../actions";
+import { pushTab, popTab } from "../actions";
 import Controls from "../components/controls";
 
-const ControlsContainer = ({ tabs, pushTab }) => (
+const ControlsContainer = ({ top, pushTab, popTab }) => (
     <div>
-        <Controls onPushClicked={() => pushTab()} />
+        <Controls
+            onPushClicked={() => pushTab()}
+            onPopClicked={() => popTab(top)} />
     </div>
 );
 
 ControlsContainer.propTypes = {
+    top: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        url: PropTypes.string.isRequired,
+        date: PropTypes.number.isRequired,
+    }),
     pushTab: PropTypes.func.isRequired,
+    popTab: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
-    return { tabs: state.tabs };
+    return { top: state.top };
 };
 
 export default connect(
     mapStateToProps,
-    { pushTab }
+    { pushTab, popTab }
 )(ControlsContainer);

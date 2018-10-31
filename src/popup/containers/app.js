@@ -3,7 +3,7 @@ import TabsContainer from "./tabs-container";
 import ControlsContainer from "./controls-container";
 
 const App = () => (
-    <div className={styles.app}>
+    <div>
         <h1>TabStack</h1>
         <ControlsContainer />
         <TabsContainer />
