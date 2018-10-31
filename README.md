@@ -1,4 +1,4 @@
-#Tabstack browser extension
+# Tabstack browser extension
 
 Temporary tab storage, somewhere between the top bar and bookmarks.
 
