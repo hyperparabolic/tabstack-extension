@@ -1,5 +1,5 @@
 
-const blacklistedUrls = /^(about:|chrome:|data:|file:|javascript:)/;
+const BLACKLISTED_URLS = /^(about:|chrome:|data:|file:|javascript:)/;
 
 export const PUSH_TAB_STARTING = Symbol("PUSH_TAB_STARTING");
 export const PUSH_TAB_COMPLETED = Symbol("PUSH_TAB_COMPLETED");
@@ -21,7 +21,7 @@ export const pushTab = () => {
         tab.date = Date.now();
 
         // do not push blacklisted tabs
-        if (tab.url.match(blacklistedUrls)) {
+        if (tab.url.match(BLACKLISTED_URLS)) {
             console.log("skip push, blacklisted tab");
             return;
         }
