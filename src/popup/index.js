@@ -12,7 +12,7 @@ import * as cache from "./cache";
 
 cache.getAllTabs().then((tabs) => {
     let state = {
-        tabs: tabs,
+        tabs: tabs.reverse(),
         top: tabs[0],
     };
     const store = createStore(reducer, state, applyMiddleware(thunk, logger));
