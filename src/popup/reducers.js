@@ -20,7 +20,7 @@ export const reducer = (state = { tabs: [], top: undefined }, action) => {
                 top: newTabs[0],
             };
         }
-        case actions.DELETE_TAB: {
+        case actions.DELETE_TAB_COMPLETED: {
             let newTabs = state.tabs.filter((tab) => tab.id !== action.tab.id);
             return {
                 tabs: newTabs,

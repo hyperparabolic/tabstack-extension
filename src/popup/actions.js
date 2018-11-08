@@ -1,10 +1,13 @@
+import * as cache from "./cache";
+import {sanitizeTab} from "./util";
 
 const BLACKLISTED_URLS = /^(about:|chrome:|data:|file:|javascript:)/;
 
 export const PUSH_TAB_STARTING = Symbol("PUSH_TAB_STARTING");
 export const PUSH_TAB_COMPLETED = Symbol("PUSH_TAB_COMPLETED");
 
-export const DELETE_TAB = Symbol("DELETE_TAB");
+export const DELETE_TAB_STARTING = Symbol("DELETE_TAB_STARTING");
+export const DELETE_TAB_COMPLETED = Symbol("DELETE_TAB_COMPLETED");
 
 export const POP_TAB_STARTING = Symbol("POP_TAB_STARTING");
 export const POP_TAB_COMPLETED = Symbol("POP_TAB_COMPLETED");
@@ -14,10 +17,10 @@ export const pushTab = () => {
     return async (dispatch) => {
         dispatch(pushTabStarting());
 
-        let tab = (await browser.tabs.query({
+        let tab = sanitizeTab((await browser.tabs.query({
             currentWindow: true,
             active: true,
-        }))[0];
+        }))[0]);
         tab.date = new Date().toLocaleString();
 
         // do not push blacklisted tabs
@@ -30,14 +33,17 @@ export const pushTab = () => {
             currentWindow: true,
         }));
 
-        let pushPromise = Promise.resolve(true);
+        let pushPromise = cache.addTab(tab).then((id) => {
+            tab.id = id;
+            return Promise.resolve(tab);
+        });
 
         // open newtab if last tab
         if (tabs.length === 1) {
             let props = { active: true, index: 0 };
             pushPromise.then(() => browser.tabs.create(props));
         }
-        pushPromise.then(() => browser.tabs.remove(tab.id))
+        pushPromise.then(() => browser.tabs.remove(tab.browserID))
             .then(() => dispatch(pushTabCompleted(tab)));
     };
 };
@@ -71,7 +77,9 @@ export const popTab = (tab) => {
             url: tab.url,
         };
 
-        browser.tabs.create(props).then(() => dispatch(popTabCompleted(tab)));
+        browser.tabs.create(props)
+            .then(() => cache.deleteTab(tab.id))
+            .then(() => dispatch(popTabCompleted(tab)));
     };
 };
 
@@ -89,8 +97,22 @@ const popTabCompleted = (tab) => {
 };
 
 export const deleteTab = (tab) => {
+    return async (dispatch) => {
+        dispatch(deleteTabStarting());
+
+        cache.deleteTab(tab.id).then(() => dispatch(deleteTabCompleted(tab)));
+    };
+};
+
+const deleteTabStarting = () => {
     return {
-        type: DELETE_TAB,
+        type: DELETE_TAB_STARTING,
+    };
+};
+
+const deleteTabCompleted = (tab) => {
+    return {
+        type: DELETE_TAB_COMPLETED,
         tab,
     };
 };

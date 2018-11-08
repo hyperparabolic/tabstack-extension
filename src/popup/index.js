@@ -8,12 +8,19 @@ import logger from "redux-logger";
 
 import App from "./containers/app";
 import { reducer } from "./reducers";
+import * as cache from "./cache";
 
-const store = createStore(reducer, applyMiddleware(thunk, logger));
+cache.getAllTabs().then((tabs) => {
+    let state = {
+        tabs: tabs,
+        top: tabs[0],
+    };
+    const store = createStore(reducer, state, applyMiddleware(thunk, logger));
 
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById("content")
-);
+    ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
+        document.getElementById("content")
+    );
+});
