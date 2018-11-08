@@ -21,8 +21,10 @@ export const reducer = (state = { tabs: [], top: undefined }, action) => {
             };
         }
         case actions.DELETE_TAB: {
+            let newTabs = state.tabs.filter((tab) => tab.id !== action.tab.id);
             return {
-                tabs: state.tabs.filter((tab) => tab.id !== action.tab.id),
+                tabs: newTabs,
+                top: newTabs[0],
             };
         }
         default:

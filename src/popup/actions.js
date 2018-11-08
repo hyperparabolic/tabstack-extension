@@ -18,7 +18,7 @@ export const pushTab = () => {
             currentWindow: true,
             active: true,
         }))[0];
-        tab.date = Date.now();
+        tab.date = new Date().toLocaleString();
 
         // do not push blacklisted tabs
         if (tab.url.match(BLACKLISTED_URLS)) {
