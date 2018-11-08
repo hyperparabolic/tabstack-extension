@@ -43,6 +43,7 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: "manifest.json"},
       {from: "icon.png"},
+      {from: "icon96.png"},
     ]),
     new HtmlWebPackPlugin({
       template: "./popup/index.html",

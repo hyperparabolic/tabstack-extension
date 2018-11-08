@@ -9,6 +9,10 @@
     },
     "browser_action": {
       "browser_style": true,
+      "default_icon": {
+        "48": "icon.png",
+        "96": "icon96.png"
+      },
       "default_title": "Tabstack",
       "default_popup": "popup/index.html"
     },
