@@ -17,7 +17,7 @@ ControlsContainer.propTypes = {
         title: PropTypes.string.isRequired,
         id: PropTypes.number.isRequired,
         url: PropTypes.string.isRequired,
-        date: PropTypes.number.isRequired,
+        date: PropTypes.string.isRequired,
     }),
     pushTab: PropTypes.func.isRequired,
     popTab: PropTypes.func.isRequired,

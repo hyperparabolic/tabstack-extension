@@ -27,7 +27,7 @@ TabsContainer.propTypes = {
         title: PropTypes.string.isRequired,
         id: PropTypes.number.isRequired,
         url: PropTypes.string.isRequired,
-        date: PropTypes.number.isRequired,
+        date: PropTypes.string.isRequired,
     })).isRequired,
     popTab: PropTypes.func.isRequired,
     deleteTab: PropTypes.func.isRequired,

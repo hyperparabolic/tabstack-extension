@@ -10,7 +10,7 @@ const TabDetails = ({id, url, date}) => (
 TabDetails.propTypes = {
     id: PropTypes.number.isRequired,
     url: PropTypes.string.isRequired,
-    date: PropTypes.number.isRequired,
+    date: PropTypes.string.isRequired,
 };
 
 export default TabDetails;
