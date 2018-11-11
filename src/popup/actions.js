@@ -72,8 +72,7 @@ export const popTab = (tab) => {
 
         let props = {
             active: true,
-            // TODO: +1?  have to feel this out
-            index: currentTab.index,
+            index: currentTab.index + 1,
             url: tab.url,
         };
 
