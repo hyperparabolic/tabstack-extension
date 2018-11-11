@@ -14,7 +14,7 @@ const TabsContainer = ({ tabs, popTab, deleteTab }) => (
                     <Tab
                         key={tab.id}
                         tab={tab}
-                        bgClassName={i%2 ? "tab-even" : "tab-odd"}
+                        bgClassName={i % 2 ? "tab-even" : "tab-odd"}
                         onPopClicked={() => popTab(tab)}
                         onDeleteClicked={() => deleteTab(tab)} />
                 )
