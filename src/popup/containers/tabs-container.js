@@ -10,10 +10,11 @@ const TabsContainer = ({ tabs, popTab, deleteTab }) => (
     <div>
         <TabsList>
             {
-                tabs.map(tab =>
+                tabs.map((tab, i) =>
                     <Tab
                         key={tab.id}
                         tab={tab}
+                        bgClassName={i%2 ? "tab-even" : "tab-odd"}
                         onPopClicked={() => popTab(tab)}
                         onDeleteClicked={() => deleteTab(tab)} />
                 )

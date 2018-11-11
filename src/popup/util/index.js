@@ -5,8 +5,10 @@
  * @param {tabs.Tab} tab
  */
 export const sanitizeTab = (tab) => {
+    console.log(tab.favIconUrl);
     return {
         browserID: tab.id,
+        favIconUrl: tab.favIconUrl,
         title: tab.title,
         url: tab.url,
     };

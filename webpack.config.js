@@ -29,10 +29,16 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
+        test: /\.styl$/,
         use: [
           {
+            loader: "style-loader",
+          },
+          {
             loader: "css-loader",
+          },
+          {
+            loader: "stylus-loader",
           },
         ],
       },
