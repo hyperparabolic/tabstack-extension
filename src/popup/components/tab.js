@@ -7,7 +7,7 @@ import "./tab.styl";
 const Tab = ({ tab, bgClassName, onPopClicked, onDeleteClicked, onHeaderClicked }) => (
     <div className={bgClassName}>
         <div className="tab-favicon">
-            <img className="favicon" src={tab.favIconUrl} alt="favicon"></img>
+            <img onClick={onHeaderClicked} className="favicon" src={tab.favIconUrl} alt="favicon"></img>
         </div>
         <div className="tab-info">
             <h2 onClick={onHeaderClicked}>{tab.title}</h2>
