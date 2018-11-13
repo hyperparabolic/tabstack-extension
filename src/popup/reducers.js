@@ -27,6 +27,18 @@ export const reducer = (state = { tabs: [], top: undefined }, action) => {
                 top: newTabs[0],
             };
         }
+        case actions.TOGGLE_DISPLAY_DETAILS: {
+            let newTabs = state.tabs.map((tab) => {
+                if (tab.id === action.tab.id) {
+                    tab.displayDetails = !tab.displayDetails;
+                }
+                return tab;
+            });
+            return {
+                tabs: newTabs,
+                top: newTabs[0],
+            };
+        }
         default:
             return state;
     }

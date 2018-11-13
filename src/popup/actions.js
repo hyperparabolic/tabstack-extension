@@ -12,6 +12,8 @@ export const DELETE_TAB_COMPLETED = Symbol("DELETE_TAB_COMPLETED");
 export const POP_TAB_STARTING = Symbol("POP_TAB_STARTING");
 export const POP_TAB_COMPLETED = Symbol("POP_TAB_COMPLETED");
 
+export const TOGGLE_DISPLAY_DETAILS = Symbol("TOGGLE_DISPLAY_DETAILS");
+
 
 export const pushTab = () => {
     return async (dispatch) => {
@@ -112,6 +114,13 @@ const deleteTabStarting = () => {
 const deleteTabCompleted = (tab) => {
     return {
         type: DELETE_TAB_COMPLETED,
+        tab,
+    };
+};
+
+export const toggleDisplayDeails = (tab) => {
+    return {
+        type: TOGGLE_DISPLAY_DETAILS,
         tab,
     };
 };

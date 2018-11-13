@@ -4,18 +4,18 @@ import TabDetails from "./tab-details";
 
 import "./tab.styl";
 
-const Tab = ({ tab, bgClassName, onPopClicked, onDeleteClicked }) => (
+const Tab = ({ tab, bgClassName, onPopClicked, onDeleteClicked, onHeaderClicked }) => (
     <div className={bgClassName}>
         <div className="tab-favicon">
             <img className="favicon" src={tab.favIconUrl} alt="favicon"></img>
         </div>
         <div className="tab-info">
-            <h2>{tab.title}</h2>
+            <h2 onClick={onHeaderClicked}>{tab.title}</h2>
             <TabDetails
-                id={tab.id}
                 url={tab.url}
-                date={tab.date} />
-            <button onClick={onPopClicked}>Pop</button>
+                date={tab.date}
+                displayDetails={tab.displayDetails}
+                onPopClicked={onPopClicked} />
         </div>
         <div className="tab-delete">
             <button className="delete-button" aria-label="Delete Tabstack Tab" onClick={onDeleteClicked}>&times;</button>
@@ -29,10 +29,12 @@ Tab.propTypes = {
         id: PropTypes.number.isRequired,
         url: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
+        displayDetails: PropTypes.bool.isRequired,
     }).isRequired,
     bgClassName: PropTypes.string.isRequired,
     onPopClicked: PropTypes.func.isRequired,
     onDeleteClicked: PropTypes.func.isRequired,
+    onHeaderClicked: PropTypes.func.isRequired,
 };
 
 export default Tab;

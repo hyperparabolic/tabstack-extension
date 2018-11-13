@@ -8,6 +8,7 @@ export const sanitizeTab = (tab) => {
     console.log(tab.favIconUrl);
     return {
         browserID: tab.id,
+        displayDetails: false,
         favIconUrl: tab.favIconUrl,
         title: tab.title,
         url: tab.url,
