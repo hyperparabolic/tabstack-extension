@@ -10,7 +10,7 @@ const TabDetails = ({url, date, displayDetails, onPopClicked}) => {
         return (
             <div className="tab-details">
                 <ul>
-                    <li onClick={onPopClicked}>
+                    <li className="hyperlink" onClick={onPopClicked}>
                         {/* suppress normal link click here, rely on onClick above */}
                         <a href={url} onClick={(e) => e.preventDefault()}>{url}</a>
                     </li>
